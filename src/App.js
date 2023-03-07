@@ -7,20 +7,19 @@ import { ContactsPage } from "./containers/contactsPage/ContactsPage";
 function App() {
   const [contacts, setContacts] = useState([]);
   const [appointments, setAppointments] = useState([]);
-  /*
-  Define state variables for 
-  contacts and appointments 
-  */
 
   const ROUTES = {
     CONTACTS: "/contacts",
     APPOINTMENTS: "/appointments",
   };
 
-  /*
-  Implement functions to add data to
-  contacts and appointments
-  */
+  function addContact(name, phone, email) {
+    setContacts((prev) => [...prev, { name, phone, email }]);
+  }
+
+  function addAppointment(title, contact, date, time) {
+    setAppointments((prev) => [...prev, { title, contact, date, time }]);
+  }
 
   return (
     <>
@@ -39,11 +38,11 @@ function App() {
           </Route>
           <Route path={ROUTES.CONTACTS}>
             {/* Add props to ContactsPage */}
-            <ContactsPage />
+            <ContactsPage contacts={contacts} addContact={addContact} />
           </Route>
           <Route path={ROUTES.APPOINTMENTS}>
             {/* Add props to AppointmentsPage */}
-            <AppointmentsPage />
+            <AppointmentsPage appointments={appointments} contacts={contacts} addAppointment={addAppointment} />
           </Route>
         </Switch>
       </main>
